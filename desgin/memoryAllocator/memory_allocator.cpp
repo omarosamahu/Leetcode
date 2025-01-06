@@ -31,14 +31,14 @@ uint16_t Allocator::allocate(int size, int id, bool isConsecutive)
 uint16_t Allocator::getFreeSlots(int size)
 {
     uint16_t count{0U};
-    uint16_t pidx{0U};
+    uint16_t endIndx{0U};
     for (uint16_t i{0U}; i < arrayLength; i++)
     {
         if (freeIndeces[i])
         {
             if (++count == size)
             {
-                pidx = i;
+                endIndx = i;
                 break;
             }
         }
@@ -47,7 +47,7 @@ uint16_t Allocator::getFreeSlots(int size)
             count = 0;
         }
     }
-    return pidx;
+    return endIndx;
 }
 
 uint16_t Allocator::freeMemory(int id)
