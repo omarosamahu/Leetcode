@@ -16,13 +16,12 @@ public:
     Allocator(uint16_t n);
     ~Allocator();
 
-    int allocate(int size, int id, bool isConsecutive = true);
-    int freeMemory(int id);
-    int getFreeSlots(int size);
+    uint16_t allocate(int size, int id, bool isConsecutive = true);
+    uint16_t freeMemory(int id);
+    uint16_t getFreeSlots(int size);
+    uint16_t addToFreeIndeces(uint32_t size, int id);
+    uint16_t appendConsecutive(uint32_t size, int id);
     void display();
-
-    int addToFreeIndeces(uint32_t size, int id);
-    int appendConsecutive(uint32_t size, int id);
 
 private:
     int *m_array{nullptr};
