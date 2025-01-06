@@ -67,27 +67,11 @@ int Allocator::freeMemory(int id)
     return freeCount;
 }
 
-void Allocator::print()
+void Allocator::display()
 {
     for (size_t i = 0; i < array_length; i++)
     {
-        if (i < (array_length - 1))
-        {
-            std::cout << m_array[i] << ",";
-        }
-        else
-        {
-            std::cout << m_array[i];
-        }
-    }
-    std::cout << "\n";
-}
-
-void Allocator::displayFree()
-{
-    for (const auto &pair : freeIndeces)
-    {
-        std::cout << "Satrt: " << pair.first << " Second: " << pair.second << "\n";
+        std::cout << m_array[i] << ((i < (array_length - 1)) ? ',' : '\n');
     }
 }
 

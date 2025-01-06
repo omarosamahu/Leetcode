@@ -16,6 +16,6 @@ int main(int argc, char const *argv[])
     allocatorPtr->allocate(3, 4, getArgs(argv));
     allocatorPtr->allocate(1, 1, getArgs(argv));
     allocatorPtr->allocate(1, 1, getArgs(argv));
-    allocatorPtr->print();
+    allocatorPtr->display();
     return 0;
 }

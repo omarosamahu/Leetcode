@@ -19,8 +19,7 @@ public:
     int allocate(int size, int id, bool isConsecutive = true);
     int freeMemory(int id);
     int getFreeSlots(int size);
-    void print();
-    void displayFree();
+    void display();
 
     int addToFreeIndeces(uint32_t size, int id);
     int appendConsecutive(uint32_t size, int id);
