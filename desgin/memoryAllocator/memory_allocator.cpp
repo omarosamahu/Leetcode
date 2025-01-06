@@ -19,7 +19,7 @@ Allocator::~Allocator()
 
 uint16_t Allocator::allocate(int size, int id, bool isConsecutive)
 {
-    if ((currentSize + size) >= arrayLength)
+    if ((currentSize + size) > arrayLength)
     {
         std::cerr << "Insufficient memory\n";
         return -1;

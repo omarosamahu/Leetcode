@@ -13,10 +13,11 @@ int main(int argc, char const *argv[])
     allocatorPtr->allocate(1, 2, getArgs(argv));
     allocatorPtr->allocate(1, 3, getArgs(argv));
     allocatorPtr->freeMemory(2);
+    allocatorPtr->freeMemory(1);
     allocatorPtr->allocate(3, 4, getArgs(argv));
-    allocatorPtr->allocate(1, 1, getArgs(argv));
-    allocatorPtr->allocate(1, 1, getArgs(argv));
-    allocatorPtr->allocate(10, 7, getArgs(argv));
+    allocatorPtr->allocate(3, 1, getArgs(argv));
+    allocatorPtr->allocate(2, 6, getArgs(argv));
+    allocatorPtr->allocate(1, 7, getArgs(argv));
     allocatorPtr->display();
     return 0;
 }
