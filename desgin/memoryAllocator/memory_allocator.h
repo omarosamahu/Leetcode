@@ -25,7 +25,7 @@ public:
 
 private:
     int *m_array{nullptr};
-    uint16_t idx;
-    uint16_t array_length;
+    uint16_t currentSize;
+    uint16_t arrayLength;
     std::unordered_map<int, bool> freeIndeces;
 };
