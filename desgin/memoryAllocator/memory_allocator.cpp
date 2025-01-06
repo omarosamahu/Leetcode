@@ -36,8 +36,7 @@ int Allocator::getFreeSlots(int size)
     {
         if (freeIndeces[i])
         {
-            count++;
-            if (count == size)
+            if (++count == size)
             {
                 pidx = i;
                 break;
