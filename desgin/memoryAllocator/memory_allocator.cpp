@@ -1,6 +1,6 @@
 #include "memory_allocator.h"
 
-Allocator::Allocator(uint16_t n) : m_array(new int[n]), arrayLength{n}, currentSize{0U}
+Allocator::Allocator(uint16_t n) : m_array(new int[n]), memoryLength{n}, freePlaces{n}
 {
     std::fill(m_array, m_array + n, INT_MAX);
     for (uint16_t i{0U}; i < n; ++i)
@@ -17,29 +17,29 @@ Allocator::~Allocator()
     }
 }
 
-uint16_t Allocator::allocate(int size, int id, bool isConsecutive)
+int16_t Allocator::allocate(uint16_t size, int id, bool isConsecutive)
 {
-    if ((currentSize + size) > arrayLength)
+    if (size > freePlaces)
     {
-        std::cerr << "Insufficient memory\n";
+        // std::cerr << "Insufficient memory\n";
         return -1;
     }
 
-    return isConsecutive ? appendConsecutive(size, id) + 1 : addToFreeIndeces(size, id);
+    return isConsecutive ? appendConsecutive(size, id) : addToFreeIndeces(size, id);
 }
 
-uint16_t Allocator::getFreeSlots(int size)
+int16_t Allocator::getFreeSlots(uint16_t size)
 {
     uint16_t count{0U};
     uint16_t endIndx{0U};
-    for (uint16_t i{0U}; i < arrayLength; i++)
+    for (uint16_t i{0U}; i < memoryLength; i++)
     {
         if (freeIndeces[i])
         {
             if (++count == size)
             {
                 endIndx = i;
-                break;
+                return endIndx;
             }
         }
         else
@@ -47,65 +47,74 @@ uint16_t Allocator::getFreeSlots(int size)
             count = 0;
         }
     }
-    return endIndx;
+    return -1;
 }
 
 uint16_t Allocator::freeMemory(int id)
 {
     uint16_t freeCount{0U};
-    for (uint16_t i{0U}; i < arrayLength; ++i)
+    for (uint16_t i{0U}; i < memoryLength; ++i)
     {
         if (m_array[i] == id)
         {
             m_array[i] = INT_MAX;
             freeIndeces[i] = true;
+            ++freePlaces;
             ++freeCount;
-            --currentSize;
         }
     }
     return freeCount;
 }
 
-uint16_t Allocator::addToFreeIndeces(uint32_t size, int id)
+int16_t Allocator::addToFreeIndeces(uint16_t size, int id)
 {
     bool firstHit = false;
-    uint16_t pIdx{0U};
+    int16_t idx{0};
 
-    for (uint16_t i{0U}; i < arrayLength; i++)
+    for (uint16_t i{0U}; i < memoryLength; i++)
     {
         if (size > 0 && freeIndeces[i])
         {
             if (!firstHit)
             {
-                pIdx = i;
+                idx = i;
                 firstHit = true;
             }
             m_array[i] = id;
             freeIndeces[i] = false;
             --size;
-            ++currentSize;
+            --freePlaces;
         }
     }
-    return pIdx;
+    return idx;
 }
 
-uint16_t Allocator::appendConsecutive(uint32_t size, int id)
+int16_t Allocator::appendConsecutive(uint16_t size, int id)
 {
-    uint16_t endIndex{getFreeSlots(size)};
+    int16_t endIndex{getFreeSlots(size)};
+    if (endIndex == -1)
+    {
+        return -1;
+    }
     while (size > 0)
     {
         m_array[endIndex] = id;
         freeIndeces[endIndex--] = false;
-        size--;
-        currentSize++;
+        --freePlaces;
+        --size;
     }
-    return endIndex;
+    return endIndex + 1;
+}
+
+uint16_t Allocator::size()
+{
+    return (memoryLength - freePlaces);
 }
 
 void Allocator::display()
 {
-    for (uint16_t i{0U}; i < arrayLength; i++)
+    for (int i{0U}; i < memoryLength; i++)
     {
-        std::cout << m_array[i] << ((i < (arrayLength - 1)) ? ',' : '\n');
+        std::cout << m_array[i] << ((i < (memoryLength - 1)) ? ',' : '\n');
     }
 }
