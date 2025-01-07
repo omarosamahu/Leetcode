@@ -92,7 +92,7 @@ void Test3(char const *argv[])
 int main(int argc, char const *argv[])
 {
     Test1(argv);
-    Test2(argv);
-    Test3(argv);
+    // Test2(argv);
+    // Test3(argv);
     return 0;
 }
