@@ -96,6 +96,3 @@ int main(int argc, char const *argv[])
     Test3(argv);
     return 0;
 }
-/*
-
-*/

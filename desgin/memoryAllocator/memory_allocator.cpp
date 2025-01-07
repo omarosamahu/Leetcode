@@ -17,11 +17,11 @@ Allocator::~Allocator()
     }
 }
 
-int16_t Allocator::allocate(uint16_t size, int id, bool isConsecutive)
+int16_t Allocator::allocate(uint16_t size, int16_t id, bool isConsecutive)
 {
     if (size > freePlaces)
     {
-        // std::cerr << "Insufficient memory\n";
+        std::cerr << "Insufficient memory\n";
         return -1;
     }
 
@@ -50,7 +50,7 @@ int16_t Allocator::getFreeSlots(uint16_t size)
     return -1;
 }
 
-uint16_t Allocator::freeMemory(int id)
+uint16_t Allocator::freeMemory(int16_t id)
 {
     uint16_t freeCount{0U};
     for (uint16_t i{0U}; i < memoryLength; ++i)
@@ -66,7 +66,7 @@ uint16_t Allocator::freeMemory(int id)
     return freeCount;
 }
 
-int16_t Allocator::addToFreeIndeces(uint16_t size, int id)
+int16_t Allocator::addToFreeIndeces(uint16_t size, int16_t id)
 {
     bool firstHit = false;
     int16_t idx{0};
@@ -89,7 +89,7 @@ int16_t Allocator::addToFreeIndeces(uint16_t size, int id)
     return idx;
 }
 
-int16_t Allocator::appendConsecutive(uint16_t size, int id)
+int16_t Allocator::appendConsecutive(uint16_t size, int16_t id)
 {
     int16_t endIndex{getFreeSlots(size)};
     if (endIndex == -1)

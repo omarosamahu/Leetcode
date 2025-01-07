@@ -16,12 +16,12 @@ public:
     explicit Allocator(uint16_t n);
     ~Allocator();
 
-    int16_t allocate(uint16_t size, int id, bool isConsecutive = true);
+    int16_t allocate(uint16_t size, int16_t id, bool isConsecutive = true);
     int16_t getFreeSlots(uint16_t size);
-    int16_t addToFreeIndeces(uint16_t size, int id);
-    int16_t appendConsecutive(uint16_t size, int id);
+    int16_t addToFreeIndeces(uint16_t size, int16_t id);
+    int16_t appendConsecutive(uint16_t size, int16_t id);
     uint16_t size();
-    uint16_t freeMemory(int id);
+    uint16_t freeMemory(int16_t id);
     void display();
 
 private:
