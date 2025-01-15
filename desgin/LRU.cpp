@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include <array>
 #include <utility>
-#include <algorithm>
 #include <memory>
 
 class LRUCache{
@@ -25,7 +24,6 @@ public:
         // Put into map;
         auto itr = chacheMap.find(key);
         if(itr != chacheMap.end()){
-            chacheMap[key].first = value;
             cacheList.splice(cacheList.begin(),cacheList,chacheMap[key].second);
         }
         else{
@@ -35,8 +33,8 @@ public:
             chacheMap.erase(LRU);
         }
         cacheList.push_front(key);
-        chacheMap[key] = std::make_pair(value,cacheList.begin());
         }
+        chacheMap[key] = std::make_pair(value,cacheList.begin());
     }
 
     void display() const{
