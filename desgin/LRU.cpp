@@ -58,7 +58,7 @@ private:
 };
 int main(int argc, char const *argv[])
 {
-    std::unique_ptr<LRUCache> lRUCache = std::make_unique<LRUCache>(4);
+    auto lRUCache{std::make_unique<LRUCache>(4)};
 
     printf("Value for key %d: %d\n", 2, lRUCache->get(2));
 
