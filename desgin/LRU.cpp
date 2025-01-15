@@ -1,7 +1,6 @@
 #include <iostream>
 #include <list>
 #include <unordered_map>
-#include <array>
 #include <utility>
 #include <memory>
 
