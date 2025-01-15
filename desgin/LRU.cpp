@@ -1,7 +1,5 @@
 #include <iostream>
 #include <list>
-#include <queue>
-#include <vector>
 #include <unordered_map>
 #include <array>
 #include <utility>
@@ -13,16 +11,13 @@ public:
     LRUCache() = default;
     LRUCache(int capacity):cacheList(capacity),cacheCapacity{capacity}{
     }
-    ~LRUCache(){
-        
-    }
+    ~LRUCache() = default;
     int get(int key){
         auto it = chacheMap.find(key);
         if(it == chacheMap.end()){
             printf("Key %d is not found\n",key);
             return -1;
         }
-        // Update the cache positions
         cacheList.splice(cacheList.begin(),cacheList, it->second.second);
         return chacheMap[key].first;
     }
@@ -30,21 +25,15 @@ public:
         // Put into map;
         auto itr = chacheMap.find(key);
         if(itr != chacheMap.end()){
-            // Update value
             chacheMap[key].first = value;
-            // Move it to the front
             cacheList.splice(cacheList.begin(),cacheList,chacheMap[key].second);
         }
         else{
         if(cacheList.size() == cacheCapacity){
-            // Identify last element
             int LRU = cacheList.back();
-            // Remove it from the list 
             cacheList.pop_back();
-            // Remove it from the map
             chacheMap.erase(LRU);
         }
-        // add it to the front
         cacheList.push_front(key);
         chacheMap[key] = std::make_pair(value,cacheList.begin());
         }
