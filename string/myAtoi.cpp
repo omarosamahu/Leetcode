@@ -2,47 +2,29 @@
 #include <unordered_set>
 #include <vector>
 
-std::unordered_set<int> digits {0,1,2,3,4,5,6,7,8,9};
-int myAtoi(std::string s) {
-        int number = 0;
-
-        int startPos = 0;
-        while (s[startPos] == ' ')
+int myAtoi(std::string s)
+{
+    int num;
+    std::unordered_set<int> digits{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    for (size_t i = 0; i < s.size(); ++i)
+    {
+        if ((i == 0) && (s[i] == ' ' || s[i] == '-' || s[i] == '+'))
         {
-            ++startPos;
+            continue;
         }
+        char x = s[i] - '0';
 
-        bool nesgative = 0;
-        if(s.find("0-") != std::string::npos){
+        if (digits.find(x) == digits.end())
+        {
             return 0;
         }
-
-        if(s[startPos] == '-'){
-            nesgative = true;
-            ++startPos;
-        }else if(s[startPos] == '+'){
-            ++startPos;
-        }
-
-        if(s[startPos] == '0'){
-            ++startPos;
-        }
-        
-        for(int i=startPos;i<s.size();++i){
-            char digit = s[i] - '0';
-
-            if(digits.find(digit) == digits.end()){
-                break;
-            }
-            else{
-                number = number * 10 + digit;
-            }
-        }
-        return !nesgative ? number : (number * -1);
-} 
+        num = num * 10 + x;
+    }
+    return s[0] == '-' ? (num * -1) : num;
+}
 int main(int argc, char const *argv[])
 {
-    std::string input = "word of 973";
+    std::string input = "-42";
 
     auto result = myAtoi(input);
     std::cout << "Result is: " << result << "\n";
