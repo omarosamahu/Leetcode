@@ -1,7 +1,5 @@
 #include <iostream>
-#include <unordered_map>
 #include <vector>
-#include <array>
 
 void countChars(const std::string &word, std::vector<std::vector<int>> &freq, bool stop = false)
 {
